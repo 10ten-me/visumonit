@@ -1,0 +1,61 @@
+// @import "bootstrap/bootstrap-reboot";
+// @import "bootstrap/bootstrap-grid";
+// @import "bootstrap/bootstrap";
+
+@import "bulma/bulma";
+@import "bulma-helpers/margin_padding";
+
+#main-content{
+
+	min-height: calc( 100vh - #{$navbar-height});
+	padding: 3rem;
+
+    background-image: linear-gradient(to right top, #ffffff, #fbfbfb, #f6f6f6, #f2f2f2, #eeeeee);
+}
+
+
+.card-status-failing {
+
+	background: $danger;
+	color: white !important;
+
+	.card-header-title, .card-header {
+		color: white;
+		text-align: center;
+	}
+
+	.service-logo{
+		border-radius: 100%;
+	}
+
+	animation: danger-pulse 0.7s ease infinite;
+	
+}
+
+@keyframes danger-pulse {
+	0%,100% {
+	  background: $danger;
+	  transform: scale(1);
+	}
+	
+	5% {
+	  background: $warning;
+	  transform: scale(1.015);
+	}
+	
+  }
+
+.card-status-ok {
+
+	background: $success;
+
+	.card-header-title, .card-header {
+		color: white;
+		text-align: center;
+	}
+
+	.service-logo{
+		border-radius: 100%;
+	}
+	
+}

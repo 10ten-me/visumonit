@@ -1,0 +1,56 @@
+<div id="settings-modal" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Settings</p>
+      <button class="delete" aria-label="close" onclick="document.querySelector('#settings-modal').classList.remove('is-active')"></button>
+    </header>
+    <section class="modal-card-body">
+      <section class="section">
+        <div class="container">
+          <h1 class="title">List of assigned domains</h1>
+
+          <div id="settings-saved-domains"></div>
+
+          <div class="columns has-margin-top-3">
+
+            <div class="column is-10">
+
+              <div class="field-body">
+                <p class="control field is-expanded">
+                  <input id="new-domain-adder-url" class="input" type="text" placeholder="URL to fetch from">
+                </p>
+              </div>
+
+              <div class="field-body has-margin-top-7">
+                <div class="field">
+                  <p class="control is-expanded">
+                    <input id="new-domain-adder-user" class="input" type="text" placeholder="Username (optional)">
+                  </p>
+                </div>
+                <div class="field">
+                  <p class="control is-expanded">
+                    <input id="new-domain-adder-pass" class="input" type="text" placeholder="Password (optional)">
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="column">
+              <p class="control is-pulled-right">
+                <a class="button is-info" onclick="addDomainToSettings()">
+                Add
+              </a>
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+    </section>
+  </div>
+</div>
+</div>
