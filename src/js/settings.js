@@ -96,3 +96,37 @@ function deleteDomainToSettings(domainName) {
     refreshDomainSettingsList();
 
 }
+
+
+
+function saveSettings() {
+    const data = window.localStorage.getItem("ten-monit");
+    const filename = "monit_dashboard_settings.json";
+    let blob = new Blob([data], { type: "application/json" });
+    if (window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveBlob(blob, filename);
+    }
+    else {
+        var elem = window.document.createElement("a");
+        elem.href = window.URL.createObjectURL(blob);
+        elem.download = filename;
+        document.body.appendChild(elem);
+        elem.click();
+        document.body.removeChild(elem);
+    }
+}
+
+
+function loadFileAsText(){
+    var fileToLoad = document.getElementById("fileToLoad").files[0];
+    var fileReader = new FileReader();
+    fileReader.onload = function(fileLoadedEvent){
+        var textFromFileLoaded = fileLoadedEvent.target.result;
+        window.localStorage.setItem("ten-monit", textFromFileLoaded)
+        refreshDomainSettingsList()
+        // console.log( textFromFileLoaded )
+        // document.getElementById("inputTextToSave").value = textFromFileLoaded;
+    };
+
+    fileReader.readAsText(fileToLoad, "UTF-8");
+}

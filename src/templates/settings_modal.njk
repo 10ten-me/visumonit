@@ -3,7 +3,10 @@
   <div class="modal-card">
     <header class="modal-card-head">
       <p class="modal-card-title">Settings</p>
-      <button class="delete" aria-label="close" onclick="document.querySelector('#settings-modal').classList.remove('is-active')"></button>
+      <input type="file" id="fileToLoad" onchange="loadFileAsText()" style="display: none">
+      <button class="button is-info is-outlined has-margin-right-7" aria-label="close" onclick="document.getElementById('fileToLoad').click();">Import</button>
+      <button class="button is-link is-outlined has-margin-right-7" onclick="saveSettings()" aria-label="close" onclick="">Export</button>
+      <button class="delete is-danger" aria-label="close" onclick="document.querySelector('#settings-modal').classList.remove('is-active')"></button>
     </header>
     <section class="modal-card-body">
       <section class="section">
