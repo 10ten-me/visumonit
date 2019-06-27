@@ -1,5 +1,4 @@
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/17b6ed36-d3b9-43d6-b375-d7f5fc8cf919/deploy-status)](https://app.netlify.com/sites/vigorous-kilby-44916d/deploys)
 
 # Bare-bones static site generator with Nunjucks
 
