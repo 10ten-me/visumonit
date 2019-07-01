@@ -34,7 +34,7 @@ function updateTable(monit, nodeName, nodeId) {
         myElement.classList.add("hero-body");
         document.querySelector("#main-content").appendChild(myElement);
         myElement.innerHTML = `
-        <div class="container">
+        <div class="container is-fluid">
             <h1 class="title">${nodeName}</h1>
             <h2 class="subtitle">Last Update it on: <strong id="_${nodeId}-updateon" 
                             class="last-update">${new Date()}</strong></h2>
