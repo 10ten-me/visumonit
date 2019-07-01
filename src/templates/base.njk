@@ -2,22 +2,22 @@
 
 <html>
 
-<head>
-{% include "header.njk" %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/x2js/1.2.0/xml2json.min.js" integrity="sha256-RbFvov4fXA9DW/RzOAcIC0ZHIDmghGdsoug5slJHMMI=" crossorigin="anonymous"></script>
-{% block scripts %} {% endblock %}
-</head>
+  <head>
+    {% include "header.njk" %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/x2js/1.2.0/xml2json.min.js" integrity="sha256-RbFvov4fXA9DW/RzOAcIC0ZHIDmghGdsoug5slJHMMI=" crossorigin="anonymous"></script>
+    {% block scripts %} {% endblock %}
+  </head>
 
 
-<body class="is-preload  {{lang.css}}">
+  <body class="is-preload  {{lang.css}}">
 
-  {% block content %} {% endblock %} 
+    {% block content %} {% endblock %} 
 
-  {% block bottomScripts %}{% endblock %}
+    {% block bottomScripts %}{% endblock %}
 
-</body>
+  </body>
 
-<script src="/scripts/settings.js"></script>
-<script src="/scripts/main.js"></script>
+  <script src="/scripts/settings.js"></script>
+  <script src="/scripts/main.js"></script>
 
 </html>
