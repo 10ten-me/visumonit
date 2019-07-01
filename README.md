@@ -6,6 +6,9 @@
 2. To run the server:
 `npm start`
 
+3. Validate your code with eslint:
+`npm run lint`
+
 # How will gulp build this website
 The output will be in the folder `build`
 

@@ -5,7 +5,8 @@
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./node_modules/.bin/gulp"
+    "start": "./node_modules/.bin/gulp",
+    "lint": "./node_modules/.bin/eslint -c .eslintrc.json src/js/*"
   },
   "author": "Ahmad Nofal",
   "devDependencies": {
