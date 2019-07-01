@@ -67,6 +67,7 @@ function updateTable(monit, nodeName, nodeId) {
                     class="service-logo column is-9" src="/images/${
                         service.port.protocol === "REDIS" ? `redis.png`
                 : service.port.protocol === "PGSQL" ? `postgres.png`
+                : service.port.protocol === "MYSQL" ? `mysql.png`
                     // : service.port.protocol=== "nginx" ? `nginx.png`
                         : service.port.protocol === "SSH" ? `ssh.png`
                             : (service.name === "stark" || service.name === "banshee") ? `ziwo.png`
