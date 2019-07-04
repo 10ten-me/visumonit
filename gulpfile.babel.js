@@ -1,16 +1,24 @@
-const gulp = require('gulp');
-const browserSync = require('browser-sync');
-const sass        = require('gulp-sass');
-const prefix      = require('gulp-autoprefixer');
-const cssnano     = require('gulp-cssnano');
-const concat      = require('gulp-concat');
-const uglify      = require('gulp-uglify');
-const babel       = require('gulp-babel');
-const render      = require('gulp-nunjucks-render');
-const clean       = require('gulp-clean');
-const sourcemaps  = require('gulp-sourcemaps');
-const gzip        = require('gulp-gzip');
-const del         = require('del');
+
+const gulp         = require('gulp');
+const browserSync  = require('browser-sync');
+const rollup       = require('gulp-rollup');
+const sass         = require('gulp-sass');
+const prefix       = require('gulp-autoprefixer');
+const cssnano      = require('gulp-cssnano');
+const concat       = require('gulp-concat');
+const uglify       = require('gulp-uglify');
+const babel        = require('gulp-babel');
+const render       = require('gulp-nunjucks-render');
+const clean        = require('gulp-clean');
+const sourcemaps   = require('gulp-sourcemaps');
+const gzip         = require('gulp-gzip');
+const del          = require('del');
+
+const babelify = require('babelify');
+const browserify = require("gulp-browserify");
+const source = require("vinyl-source-stream");
+const buffer = require("vinyl-buffer");
+
 
 
 
@@ -39,13 +47,42 @@ const cleanBuild = () => {
 // compile js
 
 const compileScripts = () => {
-    return gulp.src(['src/js/**/*.js'])
-        // .pipe(babel({
-        // //    "presets": ["@babel/preset-env"]
-        // }))
-        //.pipe(concat('scripts.js'))
-        .pipe(gulp.dest('./build/scripts'))
-        .pipe(browserSync.reload({ stream: true }))
+
+    return gulp.src('./src/js/main.js', { read: false })  
+    // .pipe(babelify.configure(({
+    //             presets: ["es2015"]
+    // }))
+    .pipe(browserify({
+        transform: ['babelify'] ,
+        insertGlobals : true,
+        // standalone: "settings"
+    }))
+    // .transform(babelify.configure({
+    //     presets : ["es2015"]
+    // }))
+    // .bundle()
+    // .pipe(source("bundle.js"))
+    // .pipe(buffer())
+    // .pipe(sourcemaps.init())
+    // .pipe(uglify())
+    // .pipe(sourcemaps.write('./maps'))
+    .pipe(gulp.dest("./build/scripts"))
+    .pipe(browserSync.reload({ stream: true }));
+    
+    // gulp.src(['src/js/**/*.js'])
+    //     .pipe(rollup({
+    //         format: 'iife',
+    //         input: 'src/js/main.js'
+    //     }))
+    //     // .pipe(sourcemaps.init())
+    //     // .pipe(babel({
+    //     //     presets: ['@babel/env']
+    //     // }))
+    //     // .pipe(concat('main.js'))
+    //     // .pipe(sourcemaps.write('.'))
+    //     .pipe(gulp.dest('./build/scripts'))
+    //     //.pipe(concat('scripts.js'))
+    //     .pipe(browserSync.reload({ stream: true }))
 }
 
 // compile scss

@@ -130,3 +130,12 @@ function loadFileAsText(){
 
     fileReader.readAsText(fileToLoad, "UTF-8");
 }
+
+module.exports = {
+    loadFileAsText,
+    refreshDomainSettingsList,
+    openSettings,
+    addDomainToSettings,
+    deleteDomainToSettings,
+    saveSettings,
+}
