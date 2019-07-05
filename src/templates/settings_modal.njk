@@ -3,14 +3,53 @@
   <div class="modal-card">
     <header class="modal-card-head">
       <p class="modal-card-title">Settings</p>
-      <input type="file" id="fileToLoad" onchange="loadFileAsText()" style="display: none">
+      <input type="file" id="fileToLoad" onchange="settings.loadFileAsText()" style="display: none">
       <button class="button is-info is-outlined has-margin-right-7" aria-label="close" onclick="document.getElementById('fileToLoad').click();">Import</button>
       <button class="button is-link is-outlined has-margin-right-7" onclick="settings.saveSettings()" aria-label="close" onclick="">Export</button>
-      <button class="delete is-danger" aria-label="close" onclick="document.querySelector('#settings-modal').classList.remove('is-active')"></button>
+      <button class="delete is-danger" aria-label="close" onclick="document.querySelector('#settings-modal').classList.remove('is-active');location.reload();"></button>
     </header>
     <section class="modal-card-body">
-      <section class="section">
+      <section class="section has-padding-top-7">
+        {# cycling Options #}
         <div class="container">
+          <h1 class="title">Cycling</h1>
+
+          <div class="columns">
+            <div class="column is-10">
+              <label class="checkbox">
+              Start cycle through nodes after 10 seconds
+              </label>
+            </div>
+            <div class="column">
+              <input onchange="settings.addCycleSettings()" id="cycle_autostart" type="checkbox">
+            </div>
+          </div>
+
+          <div class="columns">
+            <div class="column is-10">
+              <label class="checkbox">
+              Full Page height for each node
+              </label>
+            </div>
+            <div class="column">
+              <input onchange="settings.addCycleSettings()" id="cycle_fullHeight" type="checkbox">
+            </div>
+          </div>
+
+          <div class="columns">
+            <div class="column is-10">
+              <label class="checkbox">
+              Cycling interval
+              </label>
+            </div>
+            <div class="column field">
+              <input onchange="settings.addCycleSettings()" id="cycle_interval" class="input" type="number">
+            </div>
+          </div>
+
+        </div>
+        {# add domains #}
+        <div class="container has-padding-top-2">
           <h1 class="title">List of monit xml pages</h1>
 
           <div id="settings-saved-domains"></div>

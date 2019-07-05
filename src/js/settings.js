@@ -1,5 +1,6 @@
 
 let settingsJson;
+refreshDomainSettingsList(); //init settings
 
 function  openSettings() {
 
@@ -8,14 +9,28 @@ function  openSettings() {
 
 }
 
+const defaultConfig = JSON.stringify({
+    domainsArray: [],
+    cycle: {
+        autostart: false,
+        fullHeight: false,
+        interval: 3000,
+    }
+});
 function refreshDomainSettingsList(){
 
     if ( window.localStorage.getItem("ten-monit") == null ) {
-        window.localStorage.setItem("ten-monit", `{"domainsArray":[]}`);
+        window.localStorage.setItem("ten-monit", defaultConfig);
     }
     try {
         settingsJson = JSON.parse(window.localStorage.getItem("ten-monit"));
         let text = "";
+        if(!settingsJson.cycle){
+            settingsJson.cycle ={}
+        }
+        document.querySelector("#cycle_autostart").checked = settingsJson.cycle.autostart || false;
+        document.querySelector("#cycle_fullHeight").checked = settingsJson.cycle.fullHeight || false;
+        document.querySelector("#cycle_interval").value = (settingsJson.cycle.interval || 3000) / 1000;
         for ( const domain of settingsJson.domainsArray){
             text += `
 
@@ -64,8 +79,8 @@ function refreshDomainSettingsList(){
         document.querySelector("#settings-saved-domains").innerHTML = text;
         // console.log( settingsJson )
     } catch(e){
-        console.log(e)
-        window.localStorage.setItem("ten-monit", `{"domainsArray":[]}`)
+        console.error(e)
+        window.localStorage.setItem("ten-monit", defaultConfig)
         settingsJson = JSON.parse(window.localStorage.getItem("ten-monit"));
         document.querySelector("#settings-saved-domains").innerHTML = "";
     }
@@ -75,7 +90,6 @@ function refreshDomainSettingsList(){
 }
 
 function addDomainToSettings() {
-
     settingsJson.domainsArray.push( {
         url: document.querySelector("#new-domain-adder-url").value,
         user: document.querySelector("#new-domain-adder-user").value,
@@ -86,7 +100,16 @@ function addDomainToSettings() {
     document.querySelector("#new-domain-adder-pass").value = "";
     window.localStorage.setItem("ten-monit", JSON.stringify(settingsJson));
     refreshDomainSettingsList();
+}
 
+function addCycleSettings() {
+    settingsJson.cycle = {
+        autostart: document.querySelector("#cycle_autostart").checked,
+        fullHeight: document.querySelector("#cycle_fullHeight").checked,
+        interval: (document.querySelector("#cycle_interval").value|| 3) * 1000,
+    };
+    window.localStorage.setItem("ten-monit", JSON.stringify(settingsJson));
+    refreshDomainSettingsList();
 }
 
 function deleteDomainToSettings(domainName) {
@@ -132,10 +155,19 @@ function loadFileAsText(){
 }
 
 module.exports = {
+    settingsJson,
     loadFileAsText,
     refreshDomainSettingsList,
     openSettings,
     addDomainToSettings,
     deleteDomainToSettings,
     saveSettings,
+    scrollToCard,
+    addCycleSettings
+}
+
+function scrollToCard( id ){
+    const el = document.querySelector("#" + id);
+    const elemenetPosition = Math.floor(el.getBoundingClientRect().top) + window.scrollY;
+    window.scroll(0, elemenetPosition - 100 );
 }

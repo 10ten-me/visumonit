@@ -16,16 +16,13 @@
 
 .card-status-failing {
 
+	width: 100%;
 	background: $danger;
 	color: white !important;
 
 	.card-header-title, .card-header {
 		color: white;
 		text-align: center;
-	}
-
-	.service-logo{
-		border-radius: 100%;
 	}
 
 	animation: danger-pulse 0.7s ease infinite;
@@ -47,6 +44,7 @@
 
 .card-status-ok {
 
+	width: 100%;
 	background: $success;
 
 	.card-header-title, .card-header {
@@ -54,10 +52,7 @@
 		text-align: center;
 	}
 
-	.service-logo{
-		border-radius: 100%;
-	}
-	
+
 }
 
 .ellipsis{
@@ -65,4 +60,15 @@
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.service-section{
+	min-height: 100vh
+}
+
+.service-logo{
+	border-radius: 100%;
+	max-height: 50px;
+	height:auto;
+    width:auto;
 }
