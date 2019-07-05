@@ -4,22 +4,20 @@
       <img src="/images/10ten.png" width="112" height="28">
     </a>
 
-    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+    <div class="navbar-brand">
+      <div id="servers-tabs" class="buttons"></div>
+    </div>
+
+    <a role="button" onclick='settings.openSettings()' class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </a>
   </div>
 
-  <div class="navbar-brand">
-        <div id="servers-tabs" class="buttons">
-        </div>
-  </div>
-
   <div id="navbarBasicExample" class="navbar-menu">
 
-
-    <div class="navbar-end">
+    <div class="navbar-end ">
       <div class="navbar-item">
         <div class="buttons">
           <a class="button is-light" onclick='settings.openSettings()'>
@@ -28,5 +26,7 @@
         </div>
       </div>
     </div>
+
   </div>
+
 </nav>
