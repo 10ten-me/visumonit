@@ -173,8 +173,6 @@ function checkLastUpdate() {
 let cardScrollerIndex = 0;
 function cardScroller(){
 
-    console.log(cardScrollerIndex)
-    console.log(serversTabs.length)
     if( cardScrollerIndex >= serversTabs.length ){
         cardScrollerIndex = 0;
     }
