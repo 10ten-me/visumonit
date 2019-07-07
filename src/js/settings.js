@@ -125,7 +125,11 @@ function addCycleSettings() {
     settingsJson.cycle = {
         autostart: document.querySelector("#cycle_autostart").checked,
         fullHeight: document.querySelector("#cycle_fullHeight").checked,
-        interval: (document.querySelector("#cycle_interval").value|| 3) * 1000,
+        interval: ((
+            document.querySelector("#cycle_interval").value > 0 ?
+                document.querySelector("#cycle_interval").value
+                : 3
+        ) * 1000),
     };
     window.localStorage.setItem("ten-monit", JSON.stringify(settingsJson));
     refreshDomainSettingsList();
