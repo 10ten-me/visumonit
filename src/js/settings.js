@@ -2,13 +2,12 @@
 let settingsJson;
 refreshDomainSettingsList(); //init settings
 
+// open the modal for settings
 function  openSettings() {
-
     document.querySelector("#settings-modal").classList.add("is-active");
-    refreshDomainSettingsList();
-
 }
 
+// default config incase of corrupt settings or missing settings
 const defaultConfig = JSON.stringify({
     domainsArray: [],
     cycle: {
@@ -17,6 +16,8 @@ const defaultConfig = JSON.stringify({
         interval: 3000,
     }
 });
+
+// load configs to the settings
 function refreshDomainSettingsList(){
 
     if ( window.localStorage.getItem("ten-monit") == null ) {
@@ -96,6 +97,7 @@ function refreshDomainSettingsList(){
 
 }
 
+// add domain to the settings
 function addDomainToSettings() {
     settingsJson.domainsArray.push( {
         url: document.querySelector("#new-domain-adder-url").value,
@@ -111,6 +113,7 @@ function addDomainToSettings() {
     refreshDomainSettingsList();
 }
 
+// update settings for the cyle
 function addCycleSettings() {
     settingsJson.cycle = {
         autostart: document.querySelector("#cycle_autostart").checked,
@@ -121,6 +124,7 @@ function addCycleSettings() {
     refreshDomainSettingsList();
 }
 
+// remove a domain from settings
 function deleteDomainToSettings(domainName) {
 
     settingsJson.domainsArray = settingsJson.domainsArray.filter(elm => elm.url !== domainName);
@@ -129,8 +133,7 @@ function deleteDomainToSettings(domainName) {
 
 }
 
-
-
+// used to exports to .json config file
 function saveSettings() {
     const data = window.localStorage.getItem("ten-monit");
     const filename = "monit_dashboard_settings.json";
@@ -148,7 +151,7 @@ function saveSettings() {
     }
 }
 
-
+// used to load settings from config file
 function loadFileAsText(){
     var fileToLoad = document.getElementById("fileToLoad").files[0];
     var fileReader = new FileReader();
@@ -175,6 +178,7 @@ module.exports = {
     addCycleSettings
 }
 
+// scroll to cards id
 function scrollToCard( id ){
     const el = document.querySelector("#" + id);
     const elemenetPosition = Math.floor(el.getBoundingClientRect().top) + window.scrollY;

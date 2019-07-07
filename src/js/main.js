@@ -1,12 +1,30 @@
 
 
-import settings from './settings';
-import timeTools from './timeTools';
+import settings from "./settings";
+import timeTools from "./timeTools";
+import X2JS from "x2js";
 
-window.settings = settings;
+window.settings = settings; // so the html elements with onclick can access it
+let parser = new X2JS(); // xml parser library
 
-let parser = new X2JS();
 
+window.onload = function () {
+
+    refreshStatus();
+    setInterval(refreshStatus, 3000);
+
+    checkLastUpdate();
+    setInterval(checkLastUpdate, 500);
+
+    if( settings.settingsJson.cycle.autostart ){
+        setTimeout(() => {
+            cardScroller();
+            setInterval(cardScroller, settings.settingsJson.cycle.interval);
+        }, 1000);
+    }
+};
+
+// fetch the xml configs from the servers and prepare them to be displayed
 function refreshStatus() {
 
     let domainsList = settings.refreshDomainSettingsList().domainsArray;
@@ -21,17 +39,17 @@ function refreshStatus() {
 
         fetch(domain.url, options)
             .then(response => response.text())
-            .then(xmlString => parser.xml_str2json(xmlString).monit)
+            .then(xmlString => parser.xml2js(xmlString).monit)
             .then(function (data) {
                 // console.log(data)
-                const nickName = domain.nickName || data.server.localhostname;
+                const nickName = domain.nickName || data.server.localhostname; // if not specified in the config get default one
                 updateTable(data, nickName, data.server.id);
             });
     }
 
 }
 
-
+// function to inject the status and nodes
 const serversTabs = [];
 function updateTable(monit, nodeName, nodeId) {
     if (document.querySelector("#_" + nodeId + "-services") == null) {
@@ -55,8 +73,8 @@ function updateTable(monit, nodeName, nodeId) {
         // in tab
         var myElement2 = document.createElement("button");
         myElement.id =  "_" + nodeId + "-tab";
-        serversTabs.push( "_" + nodeId + "-services"  )
-        myElement2.onclick = function() { settings.scrollToCard( "_" + nodeId + "-services" ) };
+        serversTabs.push( "_" + nodeId + "-services"  );
+        myElement2.onclick = function() { settings.scrollToCard( "_" + nodeId + "-services" )};
         myElement2.innerHTML = nodeName;
         myElement2.classList.add("button");
         myElement2.classList.add("is-light");
@@ -74,7 +92,7 @@ function updateTable(monit, nodeName, nodeId) {
         text = `
 
             <div class="column is-one-fifth is-flex">
-            <div class="card ${ service.status === "0" ? ` card-status-ok ` : ` card-status-failing `}">
+            <div class="card ${ service.status === "0" ? " card-status-ok " : " card-status-failing "}">
                 <header class="card-header" title="${service.name}">
                 <h2 id="${ "_" + nodeId + "_" + serviceKey}" class="card-header-title ellipsis">
 
@@ -85,13 +103,13 @@ function updateTable(monit, nodeName, nodeId) {
                 <div class="content columns is-centered">
                     <img
                     class="service-logo" src="/images/${
-                service.port.protocol === "REDIS" ? `redis.png`
-                : service.port.protocol === "PGSQL" ? `postgres.png`
-                : service.port.protocol === "MYSQL" ? `mysql.png`
-                // : service.port.protocol=== "nginx" ? `nginx.png`
-                : service.port.protocol === "SSH" ? `ssh.png`
-                : (service.name === "stark" || service.name === "banshee") ? `ziwo.png`
-                : `unknown.png`
+                service.port.protocol === "REDIS" ? "redis.png"
+                : service.port.protocol === "PGSQL" ? "postgres.png"
+                : service.port.protocol === "MYSQL" ? "mysql.png"
+                // : service.port.protocol=== "nginx" ? "nginx.png"
+                : service.port.protocol === "SSH" ? "ssh.png"
+                : (service.name === "stark" || service.name === "banshee") ? "ziwo.png"
+                : "unknown.png"
             }"></img>
                 </div>
                 </div>
@@ -110,6 +128,7 @@ function updateTable(monit, nodeName, nodeId) {
 }
 
 
+// handle fav icon efficently
 let imgIconStoreArray = {};
 let imgIconBannedArray = [];
 function favIconStore(appendId, serviceName) {
@@ -122,7 +141,7 @@ function favIconStore(appendId, serviceName) {
         imgComponent.width = "16";
         imgComponent.height = "16";
         imgComponent.src = "http://" + serviceName + "/favicon.ico";
-        imgComponent.classList.add("img" + appendId)
+        imgComponent.classList.add("img" + appendId);
         imgComponent.onerror = function (e) {
             e.preventDefault;
             let failedImages = document.querySelectorAll(".img" + appendId);
@@ -141,23 +160,7 @@ function favIconStore(appendId, serviceName) {
     }
 }
 
-
-window.onload = function () {
-
-    refreshStatus();
-    setInterval(refreshStatus, 3000);
-
-    checkLastUpdate();
-    setInterval(checkLastUpdate, 500);
-
-    if( settings.settingsJson.cycle.autostart ){
-        setTimeout(() => {
-            cardScroller();
-            setInterval(cardScroller, settings.settingsJson.cycle.interval);
-        }, 1000);
-    }
-}
-
+// update and put warning for the servers if last updated timedout
 function checkLastUpdate() {
 
     let updateTimes = document.querySelectorAll(".last-update");
@@ -174,7 +177,7 @@ function checkLastUpdate() {
 }
 
 
-
+// cycle through the diffent nodes
 let cardScrollerIndex = 0;
 function cardScroller(){
 
@@ -186,5 +189,4 @@ function cardScroller(){
         cardScrollerIndex++;
     }
 }
-// cardScroller();
 

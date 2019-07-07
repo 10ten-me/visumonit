@@ -1,4 +1,5 @@
 
+// function returns of how long since a datetime
 function showDiff(date1, date2){
 
     let diff = (date2 - date1)/1000;
@@ -34,4 +35,4 @@ function showDiff(date1, date2){
 
 module.exports = {
     showDiff,
-}
+};

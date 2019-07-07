@@ -1,213 +1,149 @@
+const gulp         = require("gulp");
+const browserSync  = require("browser-sync");
+const sass         = require("gulp-sass");
+const render       = require("gulp-nunjucks-render");
+const clean        = require("gulp-clean");
+const sourcemaps   = require("gulp-sourcemaps");
+const del          = require("del");
+const data         = require("gulp-data");
+const fs           = require("fs");
+const source       = require('vinyl-source-stream');
+const browserify   = require('browserify');
+const buffer       = require('vinyl-buffer');
+const babelify     = require('babelify');
 
-const gulp         = require('gulp');
-const browserSync  = require('browser-sync');
-const rollup       = require('gulp-rollup');
-const sass         = require('gulp-sass');
-const prefix       = require('gulp-autoprefixer');
-const cssnano      = require('gulp-cssnano');
-const concat       = require('gulp-concat');
-const uglify       = require('gulp-uglify');
-const babel        = require('gulp-babel');
-const render       = require('gulp-nunjucks-render');
-const clean        = require('gulp-clean');
-const sourcemaps   = require('gulp-sourcemaps');
-const gzip         = require('gulp-gzip');
-const del          = require('del');
-
-const babelify = require('babelify');
-const browserify = require("gulp-browserify");
-const source = require("vinyl-source-stream");
-const buffer = require("vinyl-buffer");
-
-
-
-
-var data = require('gulp-data');
-var fs = require('fs');
-
-const imagemin    = require('gulp-imagemin');
-const imageminJpegRecompress = require('imagemin-jpeg-recompress');
-const imageminPngQuant = require('imagemin-pngquant');
 
 // for starting server
 const startServer = (done) => {
     browserSync.init({
         server: "./build",
-        port: 6950
-    })
-    done()
-}
+        port: 6950,
+    });
+    done();
+};
 
 // deletes old build folder
 const cleanBuild = () => {
-    return gulp.src('./build', { read: false, allowEmpty: true })
+    return gulp.src("./build", { read: false, allowEmpty: true })
         .pipe(clean());
-}
+};
 
 // compile js
-
 const compileScripts = () => {
+    del(["build/scripts/**/*"]);
 
-    return gulp.src('./src/js/main.js', { read: false })  
-    // .pipe(babelify.configure(({
-    //             presets: ["es2015"]
-    // }))
-    .pipe(browserify({
-        transform: ['babelify'] ,
-        insertGlobals : true,
-        // standalone: "settings"
-    }))
-    // .transform(babelify.configure({
-    //     presets : ["es2015"]
-    // }))
-    // .bundle()
-    // .pipe(source("bundle.js"))
-    // .pipe(buffer())
-    // .pipe(sourcemaps.init())
-    // .pipe(uglify())
-    // .pipe(sourcemaps.write('./maps'))
-    .pipe(gulp.dest("./build/scripts"))
-    .pipe(browserSync.reload({ stream: true }));
+    // set up the browserify instance on a task basis
+    var b = browserify({
+        entries: "./src/js/main.js",
+        debug: true,
+    });
     
-    // gulp.src(['src/js/**/*.js'])
-    //     .pipe(rollup({
-    //         format: 'iife',
-    //         input: 'src/js/main.js'
-    //     }))
-    //     // .pipe(sourcemaps.init())
-    //     // .pipe(babel({
-    //     //     presets: ['@babel/env']
-    //     // }))
-    //     // .pipe(concat('main.js'))
-    //     // .pipe(sourcemaps.write('.'))
-    //     .pipe(gulp.dest('./build/scripts'))
-    //     //.pipe(concat('scripts.js'))
-    //     .pipe(browserSync.reload({ stream: true }))
-}
+    return b
+        .transform(babelify.configure({
+            presets: [["@babel/env", {
+                targets: {
+                    "chrome": "60"
+                }
+            }]]
+        }))
+        .bundle()
+        .on("error", function(err) {
+            console.error(err.message);
+            browserSync.notify('Browserify error!');
+            this.emit('end');
+        })
+        .pipe(source("main.js"))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({ loadMaps: true }))
+        .pipe(sourcemaps.write("./"))
+        .pipe(gulp.dest("./build/scripts/"))
+        .pipe(browserSync.reload({ stream: true }));;
+
+};
 
 // compile scss
-
 const compileStyles = () => {
-    return gulp.src('src/scss/styles.scss')
+    del(["build/styles.scss"]);
+    return gulp.src("src/scss/styles.scss")
         .pipe(sourcemaps.init())
         .pipe(sass({
-            outputStyle: 'compressed',
-            includePaths: ['scss'],
+            outputStyle: "compressed",
+            includePaths: ["scss"],
             onError: browserSync.notify
         }))
-        //.pipe(gzip({ append: false }))
         .pipe(sourcemaps.write())
-        //.pipe(prefix(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }))
-        .pipe(gulp.dest('./build/'))
-        .pipe(browserSync.reload({ stream: true }))
-}
+        .pipe(gulp.dest("./build/"))
+        .pipe(browserSync.reload({ stream: true }));
+};
 
 
 // render webpages
-
 const watchMarkup = () => {
-    gulp.watch(['src/pages/**/*.njk', 'src/templates/**/*'],  compileMarkup() );
-}
+    gulp.watch(["src/pages/**/*.njk", "src/templates/**/*"], compileMarkup());
+};
 
 const compileMarkup = () => {
-    return gulp.parallel( markupArabic, markupEnglish );
-}
+    return gulp.parallel(markupEnglish);
+};
 
 const markupEnglish = () => {
-    return gulp.src('src/pages/**/*.+(njk)')
+    return gulp.src("src/pages/**/*.+(njk)")
         .pipe(data(function () {
-            return JSON.parse(fs.readFileSync('./src/templates/en.json'));
+            return JSON.parse(fs.readFileSync("./src/templates/en.json"));
         }))
         .pipe(render({
-            path: ['src/templates'],
-            data: {
-                google_maps_api_key: "AIzaSyAGoVw0khSXQJp_9CEOyZjE4BGVoNno0UU",
-            }
+            path: ["src/templates"],
         }))
-        .pipe(gulp.dest('./build/'))
-        .pipe(browserSync.reload({ stream: true }))
-}
+        .pipe(gulp.dest("./build/"))
+        .pipe(browserSync.reload({ stream: true }));
+};
 
-const markupArabic = () => {
-    return gulp.src('src/pages/**/*.+(njk)')
-        .pipe(data(function () {
-            return require('./src/templates/en.json');
-        }))
-        .pipe(data(function () {
-            const english = JSON.parse(fs.readFileSync('./src/templates/en.json'));
-            const arabic = JSON.parse(fs.readFileSync('./src/templates/ar.json'));
-            const arabicOverEnglish = {
-                lang: Object.assign(english.lang, arabic.lang)
-                    }
-            return arabicOverEnglish;
-        }))
-        .pipe(render({
-            path: ['src/templates'],
-            data: {
-                google_maps_api_key: "AIzaSyAGoVw0khSXQJp_9CEOyZjE4BGVoNno0UU",
-            }
-         }))
-        .pipe(gulp.dest('./build/ar/'))
-        .pipe(browserSync.reload({ stream: true }))
-}
 
 // copy other files 
-
 const copyFiles = () => {
-    return gulp.src('src/files/**/*', { base: 'src/files/' })
-        .pipe(gulp.dest('./build/'))
-        .pipe(browserSync.reload({ stream: true }))
+    return gulp.src("src/files/**/*", { base: "src/files/" })
+        .pipe(gulp.dest("./build/"))
+        .pipe(browserSync.reload({ stream: true }));
 }
 
 const compressImages = () => {
-    del(['build/images/**']) 
+    del(["build/images/**"]);
     return gulp
-    .src('src/images/**/*', { base: 'src/images/' })
-        // .pipe(imagemin([
-        //     imagemin.gifsicle(),
-        //     imageminJpegRecompress({
-        //       loops:6,
-        //       min: 40,
-        //       max: 85,
-        //       quality:'low'
-        //     }),
-        //   imageminPngQuant(),
-        //     imagemin.svgo()
-        //   ], {verbose: true}))
-        .pipe(gulp.dest('build/images'))
-        .pipe(browserSync.reload({ stream: true }))
+        .src("src/images/**/*", { base: "src/images/" })
+        .pipe(gulp.dest("build/images"))
+        .pipe(browserSync.reload({ stream: true }));
 }
 
 
 
 const watchScripts = () => {
-    gulp.watch(['src/js/**/*.js'], compileScripts);
-}
+    gulp.watch(["src/js/**/*.js"], compileScripts);
+};
 
 const watchStyles = () => {
-    gulp.watch(['src/scss/**/*.scss'], compileStyles)
-}
+    gulp.watch(["src/scss/**/*.scss"], compileStyles);
+};
 
 const watchFiles = () => {
-    gulp.watch(['src/files/**/*'], copyFiles)
-}
+    gulp.watch(["src/files/**/*"], copyFiles);
+};
 
 const watchImages = () => {
-    gulp.watch(['src/images/**/*'], compressImages)
-}
+    gulp.watch(["src/images/**/*"], compressImages);
+};
 
 
-const compile = gulp.parallel(compileScripts, compileStyles, compileMarkup(), copyFiles, compressImages)
-compile.description = 'compile all sources'
+const compile = gulp.parallel(compileScripts, compileStyles, compileMarkup(), copyFiles, compressImages);
+compile.description = "compile all sources";
 
 // Not exposed to CLI
-const serve = gulp.series(cleanBuild, compile, startServer)
-serve.description = 'serve compiled source on local server at port 6950'
+const serve = gulp.series(cleanBuild, compile, startServer);
+serve.description = "serve compiled source on local server at port 6950";
 
-const watch = gulp.parallel(watchMarkup, watchScripts, watchStyles, watchFiles, watchImages)
-watch.description = 'watch for changes to all source'
+const watch = gulp.parallel(watchMarkup, watchScripts, watchStyles, watchFiles, watchImages);
+watch.description = "watch for changes to all source";
 
-const defaultTasks = gulp.parallel(serve, watch)
+const defaultTasks = gulp.parallel(serve, watch);
 
 export {
     compile,
@@ -215,7 +151,6 @@ export {
     compileStyles,
 
     compileMarkup,
-    markupArabic,
     markupEnglish,
 
     serve,
@@ -224,6 +159,6 @@ export {
     watchScripts,
     watchStyles,
     defaultTasks,
-}
+};
 
-export default defaultTasks
+export default defaultTasks;
