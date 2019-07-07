@@ -16,7 +16,10 @@ Dashboard to display [monit](https://mmonit.com/monit/) XML output beautifully. 
 `npm start`
 
 3. Validate your code with eslint:
-`npm run lint`
+`npm run lint`  
+  
+Once running, go to setting and add link to the xml monit URL you want to preview. example:  
+`https://example.com/monit/_status?format=xml`
 
 # Requirements
 Make sure to enable the `CORS` header `Access-Control-Allow-Origin` on your server, in addition if yoyu are using authentication make sure you have these headers:  
