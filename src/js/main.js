@@ -47,7 +47,7 @@ function updateTable(monit, nodeName, nodeId) {
         myElement.innerHTML = `
         <div id="_${nodeId}-section"  class="container is-fluid">
             <h1 class="title">${nodeName}</h1>
-            <h2 class="subtitle">Last Update it on: <strong id="_${nodeId}-updateon" 
+            <h2 class="subtitle">Last Update it: <strong id="_${nodeId}-updateon" 
                             class="last-update" data-updated-on="${(new Date()).getTime()}"></strong></h2>
             <div id="_${nodeId}-services" class="columns is-multiline"></div>
         </div>`
@@ -154,7 +154,7 @@ window.onload = function () {
         setTimeout(() => {
             cardScroller();
             setInterval(cardScroller, settings.settingsJson.cycle.interval);
-        }, 10000);
+        }, 1000);
     }
 }
 
@@ -164,7 +164,6 @@ function checkLastUpdate() {
 
     for (let updateTime of Array.from(updateTimes)) {
         const updatedOn = new Date( Number(updateTime.getAttribute("data-updated-on")));
-        console.log(updateTime.getAttribute("data-updated-on"))
         updateTime.innerHTML = timeTools.showDiff( updatedOn, new Date() );
         if ((new Date() - updatedOn) < 20 * 1000) {
             updateTime.classList.remove("card-status-failing");

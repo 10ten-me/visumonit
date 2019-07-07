@@ -5,6 +5,11 @@
 @import "bulma/bulma";
 @import "bulma-helpers/margin_padding";
 
+.navbar{
+	position: sticky;
+    top: 0;
+}
+
 #main-content{
 
 	min-height: calc( 100vh - #{$navbar-height});
