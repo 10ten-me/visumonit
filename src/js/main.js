@@ -1,6 +1,8 @@
 
 
 import settings from './settings';
+import timeTools from './timeTools';
+
 window.settings = settings;
 
 let parser = new X2JS();
@@ -22,7 +24,8 @@ function refreshStatus() {
             .then(xmlString => parser.xml_str2json(xmlString).monit)
             .then(function (data) {
                 // console.log(data)
-                updateTable(data, data.server.localhostname, data.server.id);
+                const nickName = domain.nickName || data.server.localhostname;
+                updateTable(data, nickName, data.server.id);
             });
     }
 
@@ -45,7 +48,7 @@ function updateTable(monit, nodeName, nodeId) {
         <div id="_${nodeId}-section"  class="container is-fluid">
             <h1 class="title">${nodeName}</h1>
             <h2 class="subtitle">Last Update it on: <strong id="_${nodeId}-updateon" 
-                            class="last-update">${new Date()}</strong></h2>
+                            class="last-update" data-updated-on="${(new Date()).getTime()}"></strong></h2>
             <div id="_${nodeId}-services" class="columns is-multiline"></div>
         </div>`
 
@@ -103,7 +106,7 @@ function updateTable(monit, nodeName, nodeId) {
         }
 
     });
-    document.querySelector("#_" + nodeId + "-updateon").innerHTML = new Date();
+    document.querySelector("#_" + nodeId + "-updateon").setAttribute("data-updated-on", String((new Date()).getTime()) );
 }
 
 
@@ -157,10 +160,13 @@ window.onload = function () {
 
 function checkLastUpdate() {
 
-    let updateTimes = document.querySelectorAll('.last-update');
+    let updateTimes = document.querySelectorAll(".last-update");
 
     for (let updateTime of Array.from(updateTimes)) {
-        if ((new Date() - new Date(updateTime.innerHTML)) < 20 * 1000) {
+        const updatedOn = new Date( Number(updateTime.getAttribute("data-updated-on")));
+        console.log(updateTime.getAttribute("data-updated-on"))
+        updateTime.innerHTML = timeTools.showDiff( updatedOn, new Date() );
+        if ((new Date() - updatedOn) < 20 * 1000) {
             updateTime.classList.remove("card-status-failing");
         } else {
             updateTime.classList.add("card-status-failing");

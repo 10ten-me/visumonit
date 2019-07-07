@@ -26,7 +26,7 @@ function refreshDomainSettingsList(){
         settingsJson = JSON.parse(window.localStorage.getItem("ten-monit"));
         let text = "";
         if(!settingsJson.cycle){
-            settingsJson.cycle ={}
+            settingsJson.cycle ={};
         }
         document.querySelector("#cycle_autostart").checked = settingsJson.cycle.autostart || false;
         document.querySelector("#cycle_fullHeight").checked = settingsJson.cycle.fullHeight || false;
@@ -34,10 +34,17 @@ function refreshDomainSettingsList(){
         for ( const domain of settingsJson.domainsArray){
             text += `
 
-
             <div class="columns">
 
             <div class="column is-10">
+
+            ${ ( domain.nickName ) ? `
+            <div class="field-body has-margin-bottom-7">
+                <p class="control field is-expanded">
+                  <input class="input" type="text" value="${ domain.nickName }" disabled>
+                </p>
+              </div>
+            `: ""}
 
               <div class="field-body">
                 <p class="control field is-expanded">
@@ -69,7 +76,7 @@ function refreshDomainSettingsList(){
             </div>
 
             <div class="column">
-                    <p class="control"><a class="button is-danger" onclick="deleteDomainToSettings(\`${domain.url}\`)"> Delete</a></p>
+                    <p class="control"><a class="button is-danger" onclick="settings.deleteDomainToSettings(\`${domain.url}\`)"> Delete</a></p>
             </div>
 
           </div>
@@ -94,10 +101,12 @@ function addDomainToSettings() {
         url: document.querySelector("#new-domain-adder-url").value,
         user: document.querySelector("#new-domain-adder-user").value,
         pass: document.querySelector("#new-domain-adder-pass").value,
+        nickName: document.querySelector("#new-domain-adder-nickname").value,
     } );
     document.querySelector("#new-domain-adder-url").value = "";
     document.querySelector("#new-domain-adder-user").value = "";
     document.querySelector("#new-domain-adder-pass").value = "";
+    document.querySelector("#new-domain-adder-nickname").value = "";
     window.localStorage.setItem("ten-monit", JSON.stringify(settingsJson));
     refreshDomainSettingsList();
 }
