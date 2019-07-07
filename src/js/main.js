@@ -65,7 +65,7 @@ function updateTable(monit, nodeName, nodeId) {
         myElement.innerHTML = `
         <div id="_${nodeId}-section"  class="container is-fluid">
             <h1 class="title">${nodeName}</h1>
-            <h2 class="subtitle">Last Update it: <strong id="_${nodeId}-updateon" 
+            <h2 class="subtitle">Last Update: <strong id="_${nodeId}-updateon" 
                             class="last-update" data-updated-on="${(new Date()).getTime()}"></strong></h2>
             <div id="_${nodeId}-services" class="columns is-multiline"></div>
         </div>`
