@@ -87,8 +87,8 @@ function refreshDomainSettingsList(){
         document.querySelector("#settings-saved-domains").innerHTML = text;
         // console.log( settingsJson )
     } catch(e){
-        console.error(e)
-        window.localStorage.setItem("ten-monit", defaultConfig)
+        console.error(e);
+        window.localStorage.setItem("ten-monit", defaultConfig);
         settingsJson = JSON.parse(window.localStorage.getItem("ten-monit"));
         document.querySelector("#settings-saved-domains").innerHTML = "";
     }
@@ -157,8 +157,8 @@ function loadFileAsText(){
     var fileReader = new FileReader();
     fileReader.onload = function(fileLoadedEvent){
         var textFromFileLoaded = fileLoadedEvent.target.result;
-        window.localStorage.setItem("ten-monit", textFromFileLoaded)
-        refreshDomainSettingsList()
+        window.localStorage.setItem("ten-monit", textFromFileLoaded);
+        refreshDomainSettingsList();
         // console.log( textFromFileLoaded )
         // document.getElementById("inputTextToSave").value = textFromFileLoaded;
     };
@@ -176,7 +176,7 @@ module.exports = {
     saveSettings,
     scrollToCard,
     addCycleSettings
-}
+};
 
 // scroll to cards id
 function scrollToCard( id ){

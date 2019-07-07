@@ -68,13 +68,13 @@ function updateTable(monit, nodeName, nodeId) {
             <h2 class="subtitle">Last Update: <strong id="_${nodeId}-updateon" 
                             class="last-update" data-updated-on="${(new Date()).getTime()}"></strong></h2>
             <div id="_${nodeId}-services" class="columns is-multiline"></div>
-        </div>`
+        </div>`;
 
         // in tab
         var myElement2 = document.createElement("button");
         myElement.id =  "_" + nodeId + "-tab";
         serversTabs.push( "_" + nodeId + "-services"  );
-        myElement2.onclick = function() { settings.scrollToCard( "_" + nodeId + "-services" )};
+        myElement2.onclick = function(){settings.scrollToCard( "_" + nodeId + "-services" );};
         myElement2.innerHTML = nodeName;
         myElement2.classList.add("button");
         myElement2.classList.add("is-light");
@@ -120,7 +120,7 @@ function updateTable(monit, nodeName, nodeId) {
 
         document.querySelector("#_" + nodeId + "-services").innerHTML += text;
         if (service.port.protocol == "HTTP") {
-            favIconStore("_" + nodeId + "_" + serviceKey, service.name)
+            favIconStore("_" + nodeId + "_" + serviceKey, service.name);
         }
 
     });
