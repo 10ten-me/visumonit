@@ -26,6 +26,10 @@ function refreshDomainSettingsList(){
     }
     try {
         settingsJson = JSON.parse(window.localStorage.getItem("ten-monit"));
+        // remove add websites links
+        if( settingsJson.domainsArray.length > 0){
+            document.querySelector("#no-servers").style.display = "none";
+        }
         let text = "";
         if(!settingsJson.cycle){
             settingsJson.cycle ={};

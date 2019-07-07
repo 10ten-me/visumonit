@@ -68,7 +68,7 @@
 }
 
 .service-section{
-	min-height: 100vh
+	min-height: 95vh
 }
 
 .service-logo{
@@ -76,4 +76,19 @@
 	max-height: 50px;
 	height:auto;
     width:auto;
+}
+
+.no-servers{
+	h1{
+		font-size: 2em;
+		font-weight: 600;
+	}
+	img{
+		display: block;
+		margin: auto;
+		border-radius: 100%;
+		border: 2px #4a4a4a solid;
+		padding: 2em;
+		background: white;
+	}
 }
