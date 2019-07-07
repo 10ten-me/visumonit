@@ -22,7 +22,7 @@ Once running, go to setting and add link to the xml monit URL you want to previe
 `https://example.com/monit/_status?format=xml`
 
 # Requirements
-Make sure to enable the `CORS` header `Access-Control-Allow-Origin` on your server, in addition if yoyu are using authentication make sure you have these headers:  
+Make sure to enable the `CORS` header `Access-Control-Allow-Origin` on your server, in addition if you are using authentication make sure you have these headers:  
 ```
 Access-Control-Allow-Credentials: true
 Access-Control-Allow-Headers: access_token
@@ -34,7 +34,7 @@ Access-Control-Allow-Origin: *
 The output will be in the folder `build`
 
 ### files in `src/files`
-will be copied into root directory `build`
+will be copied into root directory `build/`
 
 ### files in `src/js`
 will be copied into `build/scripts/`
@@ -42,8 +42,8 @@ will be copied into `build/scripts/`
 ### files in `src/images`
 will be copied as into `build/images/`
 
-### files in `src/files`
-will be copied to the root into `build/`
+### `src/scss/style.scss`
+will be compiled and copied to the root into `build/style.css`
 
 # How to deploy to Netlify
 Fork this repo and deplot it on Netlify.  
