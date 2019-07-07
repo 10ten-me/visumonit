@@ -1,21 +1,33 @@
 {% extends "base.njk" %}
 
-
 {% block content %}
-{% include "./navbar.njk" %}
+    {% include "./navbar.njk" %}
 
-<div id="main-content">
+    <div id="main-content">
 
-    <section id="no-servers" class="no-servers" >
-        <div class="columns  is-desktop is-vcentered is-centered service-section">
-            <div class="column">
+        <section id="domains-errors" class="has-padding-top-3" style="display:none;">
+            <div class="columns  is-desktop is-vcentered is-centered">
+                <div class="column is-6">
+                    <div class="notification is-danger">
+                        {# <button class="delete"></button> #}
+                        <ul id="domains-errors-body">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="no-servers" class="no-servers" >
+            <div class="columns  is-desktop is-vcentered is-centered service-section">
+                <div class="column">
                     <img data-copyright="https://giphy.com/molangofficialpage" src="/images/no_servers.gif">
                     <h1 style="text-align:center;">Add a website from the settings to start!</h1>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-</div>
+    </div>
 
-{% include "./settings_modal.njk" %}
+    {% include "./settings_modal.njk" %}
 {% endblock %}

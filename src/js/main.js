@@ -22,9 +22,11 @@ window.onload = function () {
             setInterval(cardScroller, settings.settingsJson.cycle.interval);
         }, 10000);
     }
+
 };
 
 // fetch the xml configs from the servers and prepare them to be displayed
+const failedDomainsArray = {};
 function refreshStatus() {
 
     let domainsList = settings.refreshDomainSettingsList().domainsArray;
@@ -42,9 +44,24 @@ function refreshStatus() {
             .then(xmlString => parser.xml2js(xmlString).monit)
             .then(function (data) {
                 // console.log(data)
+                delete failedDomainsArray[ "_" + domain.url ];
                 const nickName = domain.nickName || data.server.localhostname; // if not specified in the config get default one
                 updateTable(data, nickName, data.server.id);
+            }).catch( function(e) {
+                failedDomainsArray[ "_" + domain.url ] = e;
             });
+    }
+
+    // show domains with error
+    if( Object.keys(failedDomainsArray).length === 0 ){
+        document.querySelector("#domains-errors").style.display = "none";
+    } else{
+        document.querySelector("#domains-errors").style.display = "block";
+        let htmlList = "";
+        Object.keys(failedDomainsArray).forEach(function (failedDomainsKey) {
+            htmlList += `<li> · ${failedDomainsKey} Has failed</li>`;
+        });
+        document.querySelector("#domains-errors-body").innerHTML = htmlList;
     }
 
 }
