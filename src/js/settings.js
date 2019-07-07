@@ -1,11 +1,5 @@
 
 let settingsJson;
-refreshDomainSettingsList(); //init settings
-
-// open the modal for settings
-function  openSettings() {
-    document.querySelector("#settings-modal").classList.add("is-active");
-}
 
 // default config incase of corrupt settings or missing settings
 const defaultConfig = JSON.stringify({
@@ -16,6 +10,13 @@ const defaultConfig = JSON.stringify({
         interval: 3000,
     }
 });
+
+refreshDomainSettingsList(); //init settings
+
+// open the modal for settings
+function  openSettings() {
+    document.querySelector("#settings-modal").classList.add("is-active");
+}
 
 // load configs to the settings
 function refreshDomainSettingsList(){
