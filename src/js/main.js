@@ -11,7 +11,7 @@ let parser = new X2JS(); // xml parser library
 window.onload = function () {
 
     refreshStatus();
-    setInterval(refreshStatus, 3000);
+    setInterval(refreshStatus, 5000);
 
     checkLastUpdate();
     setInterval(checkLastUpdate, 500);
@@ -20,7 +20,7 @@ window.onload = function () {
         setTimeout(() => {
             cardScroller();
             setInterval(cardScroller, settings.settingsJson.cycle.interval);
-        }, 1000);
+        }, 10000);
     }
 };
 
