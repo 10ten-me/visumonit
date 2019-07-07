@@ -56,42 +56,46 @@
 
           <div class="columns has-margin-top-3">
 
-            <div class="column is-10">
+            <form class="is-flex" onsubmit="return settings.addDomainToSettings(event)">
 
-              <div class="field-body">
-                <p class="control field is-expanded">
-                  <input id="new-domain-adder-nickname" class="input" type="text" placeholder="Nickname (optional)">
+              <div class="column is-10">
+
+                <div class="field-body">
+                  <p class="control field is-expanded">
+                    <input id="new-domain-adder-nickname" class="input" type="text" placeholder="Nickname (optional)">
+                  </p>
+                </div>
+
+                <div class="field-body has-margin-top-7">
+                  <p class="control field is-expanded">
+                    <input id="new-domain-adder-url" class="input" type="text" placeholder="URL to fetch from" required>
+                  </p>
+                </div>
+
+                <div class="field-body has-margin-top-7">
+                  <div class="field">
+                    <p class="control is-expanded">
+                      <input id="new-domain-adder-user" class="input" type="text" placeholder="Username (optional)">
+                    </p>
+                  </div>
+                  <div class="field">
+                    <p class="control is-expanded">
+                      <input id="new-domain-adder-pass" class="input" type="text" placeholder="Password (optional)">
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="column">
+                <p class="control is-pulled-right">
+                  <button type="submit" class="button is-info">
+                  Add
+                </button>
                 </p>
               </div>
 
-              <div class="field-body has-margin-top-7">
-                <p class="control field is-expanded">
-                  <input id="new-domain-adder-url" class="input" type="text" placeholder="URL to fetch from">
-                </p>
-              </div>
-
-              <div class="field-body has-margin-top-7">
-                <div class="field">
-                  <p class="control is-expanded">
-                    <input id="new-domain-adder-user" class="input" type="text" placeholder="Username (optional)">
-                  </p>
-                </div>
-                <div class="field">
-                  <p class="control is-expanded">
-                    <input id="new-domain-adder-pass" class="input" type="text" placeholder="Password (optional)">
-                  </p>
-                </div>
-              </div>
-
-            </div>
-
-            <div class="column">
-              <p class="control is-pulled-right">
-                <a class="button is-info" onclick="settings.addDomainToSettings()">
-                Add
-              </a>
-              </p>
-            </div>
+            </form>
 
           </div>
 

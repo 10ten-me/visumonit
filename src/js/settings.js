@@ -103,7 +103,8 @@ function refreshDomainSettingsList(){
 }
 
 // add domain to the settings
-function addDomainToSettings() {
+function addDomainToSettings(e) {
+    e.preventDefault();
     settingsJson.domainsArray.push( {
         url: document.querySelector("#new-domain-adder-url").value,
         user: document.querySelector("#new-domain-adder-user").value,
@@ -116,6 +117,7 @@ function addDomainToSettings() {
     document.querySelector("#new-domain-adder-nickname").value = "";
     window.localStorage.setItem("ten-monit", JSON.stringify(settingsJson));
     refreshDomainSettingsList();
+    return false;
 }
 
 // update settings for the cyle
