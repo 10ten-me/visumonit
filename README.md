@@ -1,8 +1,9 @@
-# VisuMonit
+# VisuMonit [(Demo)](https://visumonit.10ten.com/)
 Dashboard to display [monit](https://mmonit.com/monit/) XML output beautifully. The dashboard can:  
 1. Supports displaying status from multiple servers.
 2. Automatically cycle through the different servers. Good for display-only screens.
 3. Support fetching from servers that require authentication.
+4. Support exporting and importing settings.
 
 ![Screenshot showing the dashboard](docs/screenshot.png)
 
