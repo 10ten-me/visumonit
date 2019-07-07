@@ -170,11 +170,10 @@ function loadFileAsText(){
         var textFromFileLoaded = fileLoadedEvent.target.result;
         window.localStorage.setItem("ten-monit", textFromFileLoaded);
         refreshDomainSettingsList();
-        // console.log( textFromFileLoaded )
-        // document.getElementById("inputTextToSave").value = textFromFileLoaded;
-    };
 
+    };
     fileReader.readAsText(fileToLoad, "UTF-8");
+    document.getElementById("fileToLoad").value = "";
 }
 
 module.exports = {
