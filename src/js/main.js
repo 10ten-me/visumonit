@@ -117,7 +117,7 @@ function updateTable(monit, nodeName, nodeId) {
                 </h2>
                 </header>
                 <div class="card-content">
-                <div class="content columns is-centered">
+                <div class="content columns is-flex is-centered">
                     <img
                     class="service-logo" src="/images/${
                 service.port.protocol === "REDIS" ? "redis.png"
