@@ -24,6 +24,8 @@ to allow other developers to work with us on making this tool much better.
 
 ![Screenshot showing the dashboard](./screenshot.png) 
 
+## How to use 
+
 ## What have we used and challenges:  
   
 The Biggest challenge that this dashboard faces is the need for the CORS header to be configured on your server for the JS to fetch and use the XML output
