@@ -10,9 +10,16 @@ module.exports = {
     },
     "parserOptions": {
         "ecmaVersion": 2018,
-        "sourceType": "module"
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "arrowFunctions": true,
+        }
     },
     "rules": {
+        "prefer-arrow-callback": "error",
+        "prefer-const": "error",
+        "no-var": "error",
+        "no-func-assign": "error",
         "indent": [
             "error",
             4

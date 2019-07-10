@@ -148,12 +148,12 @@ function deleteDomainToSettings(domainName) {
 function saveSettings() {
     const data = window.localStorage.getItem("ten-monit");
     const filename = "monit_dashboard_settings.json";
-    let blob = new Blob([data], { type: "application/json" });
+    const blob = new Blob([data], { type: "application/json" });
     if (window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveBlob(blob, filename);
     }
     else {
-        var elem = window.document.createElement("a");
+        const elem = window.document.createElement("a");
         elem.href = window.URL.createObjectURL(blob);
         elem.download = filename;
         document.body.appendChild(elem);
@@ -164,10 +164,10 @@ function saveSettings() {
 
 // used to load settings from config file
 function loadFileAsText(){
-    var fileToLoad = document.getElementById("fileToLoad").files[0];
-    var fileReader = new FileReader();
+    const fileToLoad = document.getElementById("fileToLoad").files[0];
+    const fileReader = new FileReader();
     fileReader.onload = function(fileLoadedEvent){
-        var textFromFileLoaded = fileLoadedEvent.target.result;
+        const textFromFileLoaded = fileLoadedEvent.target.result;
         window.localStorage.setItem("ten-monit", textFromFileLoaded);
         refreshDomainSettingsList();
 

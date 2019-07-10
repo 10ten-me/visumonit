@@ -5,7 +5,7 @@ import * as timeTools from "./timeTools";
 import X2JS from "x2js";
 
 window.settings = settings; // so the html elements with onclick can access it
-let parser = new X2JS(); // xml parser library
+const parser = new X2JS(); // xml parser library
 
 
 window.onload = function () {
@@ -29,10 +29,10 @@ window.onload = function () {
 const failedDomainsArray = {};
 function refreshStatus() {
 
-    let domainsList = settings.refreshDomainSettingsList().domainsArray;
+    const domainsList = settings.refreshDomainSettingsList().domainsArray;
     for (const domain of domainsList) {
 
-        let options = {};
+        const options = {};
         if (domain.user != "" && domain.pass != "") {
             options.headers = new Headers({
                 "Authorization": "Basic " + btoa(domain.user + ":" + domain.pass),
@@ -42,12 +42,12 @@ function refreshStatus() {
         fetch(domain.url, options)
             .then(response => response.text())
             .then(xmlString => parser.xml2js(xmlString).monit)
-            .then(function (data) {
+            .then( (data) => {
                 // console.log(data)
                 delete failedDomainsArray[ "_" + domain.url ];
                 const nickName = domain.nickName || data.server.localhostname; // if not specified in the config get default one
                 updateTable(data, nickName, data.server.id);
-            }).catch( function(e) {
+            }).catch( (e) => {
                 failedDomainsArray[ "_" + domain.url ] = e;
             });
     }
@@ -58,7 +58,7 @@ function refreshStatus() {
     } else{
         document.querySelector("#domains-errors").style.display = "block";
         let htmlList = "";
-        Object.keys(failedDomainsArray).forEach(function (failedDomainsKey) {
+        Object.keys(failedDomainsArray).forEach( (failedDomainsKey) => {
             htmlList += `<li> · ${failedDomainsKey} Has failed</li>`;
         });
         document.querySelector("#domains-errors-body").innerHTML = htmlList;
@@ -72,7 +72,7 @@ function updateTable(monit, nodeName, nodeId) {
     if (document.querySelector("#_" + nodeId + "-services") == null) {
 
         // in body
-        var myElement = document.createElement("section");
+        const myElement = document.createElement("section");
         myElement.id = nodeId;
         myElement.classList.add("hero-body");
         if( settings.settingsJson.cycle.fullHeight){
@@ -88,7 +88,7 @@ function updateTable(monit, nodeName, nodeId) {
         </div>`;
 
         // in tab
-        var myElement2 = document.createElement("button");
+        const myElement2 = document.createElement("button");
         myElement.id =  "_" + nodeId + "-tab";
         serversTabs.push( "_" + nodeId + "-services"  );
         myElement2.onclick = function(){settings.scrollToCard( "_" + nodeId + "-services" );};
@@ -100,7 +100,7 @@ function updateTable(monit, nodeName, nodeId) {
 
     document.querySelector("#_" + nodeId + "-services").innerHTML = "";
     let text;
-    monit.service.forEach(function (service, serviceKey) {
+    monit.service.forEach( (service, serviceKey) => {
 
         service.port ? "" : service.port = {
             port: ""
@@ -146,22 +146,22 @@ function updateTable(monit, nodeName, nodeId) {
 
 
 // handle fav icon efficently
-let imgIconStoreArray = {};
-let imgIconBannedArray = [];
+const imgIconStoreArray = {};
+const imgIconBannedArray = [];
 function favIconStore(appendId, serviceName) {
     if (imgIconStoreArray[serviceName]) {
         document.querySelector("#" + appendId).prepend(imgIconStoreArray[serviceName]);
 
     } else if (imgIconBannedArray.indexOf(serviceName) == -1) {
 
-        let imgComponent = document.createElement("img");
+        const imgComponent = document.createElement("img");
         imgComponent.width = "16";
         imgComponent.height = "16";
         imgComponent.src = "http://" + serviceName + "/favicon.ico";
         imgComponent.classList.add("img" + appendId);
         imgComponent.onerror = function (e) {
             e.preventDefault;
-            let failedImages = document.querySelectorAll(".img" + appendId);
+            const failedImages = document.querySelectorAll(".img" + appendId);
             for (let i = 0; i < failedImages.length; ++i) {
                 failedImages[i].remove();
             }
@@ -180,9 +180,9 @@ function favIconStore(appendId, serviceName) {
 // update and put warning for the servers if last updated timedout
 function checkLastUpdate() {
 
-    let updateTimes = document.querySelectorAll(".last-update");
+    const updateTimes = document.querySelectorAll(".last-update");
 
-    for (let updateTime of Array.from(updateTimes)) {
+    for (const updateTime of Array.from(updateTimes)) {
         const updatedOn = new Date( Number(updateTime.getAttribute("data-updated-on")));
         updateTime.innerHTML = timeTools.showDiff( updatedOn, new Date() );
         if ((new Date() - updatedOn) < 20 * 1000) {
