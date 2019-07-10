@@ -105,7 +105,10 @@ const addDomainToSettings = (e) => {
 
     e.preventDefault();
     settingsJson.domainsArray.push( {
-        url: document.querySelector("#new-domain-adder-url").value,
+        url: document.querySelector("#new-domain-adder-url").value.startsWith("http://")
+            || document.querySelector("#new-domain-adder-url").value.startsWith("https://") ?
+            document.querySelector("#new-domain-adder-url").value
+            : "http://" + document.querySelector("#new-domain-adder-url").value,
         user: document.querySelector("#new-domain-adder-user").value,
         pass: document.querySelector("#new-domain-adder-pass").value,
         nickName: document.querySelector("#new-domain-adder-nickname").value,
