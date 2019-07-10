@@ -1,6 +1,6 @@
 
 // function returns of how long since a datetime
-function showDiff(date1, date2){
+const showDiff = (date1, date2) => {
 
     let diff = (date2 - date1)/1000;
     diff = Math.abs(Math.floor(diff));
@@ -31,7 +31,7 @@ function showDiff(date1, date2){
     
     return  output + "ago";
 
-}
+};
 
 export {
     showDiff,

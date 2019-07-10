@@ -14,12 +14,14 @@ const defaultConfig = JSON.stringify({
 refreshDomainSettingsList(); //init settings
 
 // open the modal for settings
-function  openSettings() {
+const openSettings = () => {
+    
     document.querySelector("#settings-modal").classList.add("is-active");
-}
+
+};
 
 // load configs to the settings
-function refreshDomainSettingsList(){
+const refreshDomainSettingsList = () => {
 
     if ( window.localStorage.getItem("ten-monit") == null ) {
         window.localStorage.setItem("ten-monit", defaultConfig);
@@ -75,12 +77,7 @@ function refreshDomainSettingsList(){
                 </div>
             
               ` : ""}
-
-              
-
-
             </div>
-
             <div class="column">
                     <p class="control"><a class="button is-danger" onclick="settings.deleteDomainToSettings(\`${domain.url}\`)"> Delete</a></p>
             </div>
@@ -90,20 +87,23 @@ function refreshDomainSettingsList(){
             `;
         }
         document.querySelector("#settings-saved-domains").innerHTML = text;
-        // console.log( settingsJson )
+
     } catch(e){
+
         console.error(e);
         window.localStorage.setItem("ten-monit", defaultConfig);
         settingsJson = JSON.parse(window.localStorage.getItem("ten-monit"));
         document.querySelector("#settings-saved-domains").innerHTML = "";
+
     }
 
     return JSON.parse(window.localStorage.getItem("ten-monit"));
 
-}
+};
 
 // add domain to the settings
-function addDomainToSettings(e) {
+const addDomainToSettings = (e) => {
+
     e.preventDefault();
     settingsJson.domainsArray.push( {
         url: document.querySelector("#new-domain-adder-url").value,
@@ -118,10 +118,12 @@ function addDomainToSettings(e) {
     window.localStorage.setItem("ten-monit", JSON.stringify(settingsJson));
     refreshDomainSettingsList();
     return false;
-}
+
+};
 
 // update settings for the cyle
-function addCycleSettings() {
+const addCycleSettings = () => {
+
     settingsJson.cycle = {
         autostart: document.querySelector("#cycle_autostart").checked,
         fullHeight: document.querySelector("#cycle_fullHeight").checked,
@@ -133,19 +135,21 @@ function addCycleSettings() {
     };
     window.localStorage.setItem("ten-monit", JSON.stringify(settingsJson));
     refreshDomainSettingsList();
-}
+
+};
 
 // remove a domain from settings
-function deleteDomainToSettings(domainName) {
+const deleteDomainToSettings = (domainName) => {
 
     settingsJson.domainsArray = settingsJson.domainsArray.filter(elm => elm.url !== domainName);
     window.localStorage.setItem("ten-monit", JSON.stringify(settingsJson));
     refreshDomainSettingsList();
 
-}
+};
 
 // used to exports to .json config file
-function saveSettings() {
+const saveSettings = () => {
+
     const data = window.localStorage.getItem("ten-monit");
     const filename = "monit_dashboard_settings.json";
     const blob = new Blob([data], { type: "application/json" });
@@ -160,10 +164,12 @@ function saveSettings() {
         elem.click();
         document.body.removeChild(elem);
     }
-}
+
+};
 
 // used to load settings from config file
-function loadFileAsText(){
+const loadFileAsText = () => {
+
     const fileToLoad = document.getElementById("fileToLoad").files[0];
     const fileReader = new FileReader();
     fileReader.onload = function(fileLoadedEvent){
@@ -174,6 +180,14 @@ function loadFileAsText(){
     };
     fileReader.readAsText(fileToLoad, "UTF-8");
     document.getElementById("fileToLoad").value = "";
+
+};
+
+// scroll to cards id
+const scrollToCard = ( id ) => {
+    const el = document.querySelector("#" + id);
+    const elemenetPosition = Math.floor(el.getBoundingClientRect().top) + window.scrollY;
+    window.scroll(0, elemenetPosition - 150 );
 }
 
 export  {
@@ -187,10 +201,3 @@ export  {
     scrollToCard,
     addCycleSettings
 };
-
-// scroll to cards id
-function scrollToCard( id ){
-    const el = document.querySelector("#" + id);
-    const elemenetPosition = Math.floor(el.getBoundingClientRect().top) + window.scrollY;
-    window.scroll(0, elemenetPosition - 150 );
-}
