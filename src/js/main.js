@@ -1,14 +1,11 @@
-
-
 import * as settings from "./settings";
 import * as timeTools from "./timeTools";
 import X2JS from "x2js";
 
 window.settings = settings; // so the html elements with onclick can access it
-const parser = new X2JS(); // xml parser library
+const parser = new X2JS();
 
-
-window.onload = function () {
+window.onload = () => {
 
     refreshStatus();
     setInterval(refreshStatus, 5000);
@@ -27,13 +24,13 @@ window.onload = function () {
 
 // fetch the xml configs from the servers and prepare them to be displayed
 const failedDomainsArray = {};
-function refreshStatus() {
+const refreshStatus = () => {
 
     const domainsList = settings.refreshDomainSettingsList().domainsArray;
     for (const domain of domainsList) {
 
         const options = {};
-        if (domain.user != "" && domain.pass != "") {
+        if (domain.user !== "" && domain.pass !== "") {
             options.headers = new Headers({
                 "Authorization": "Basic " + btoa(domain.user + ":" + domain.pass),
             });
@@ -42,8 +39,8 @@ function refreshStatus() {
         fetch(domain.url, options)
             .then(response => response.text())
             .then(xmlString => parser.xml2js(xmlString).monit)
-            .then( (data) => {
-                // console.log(data)
+            .then((data) => {
+                // TODO: explain the reason behind the _
                 delete failedDomainsArray[ "_" + domain.url ];
                 const nickName = domain.nickName || data.server.localhostname; // if not specified in the config get default one
                 updateTable(data, nickName, data.server.id);
@@ -53,7 +50,7 @@ function refreshStatus() {
     }
 
     // show domains with error
-    if( Object.keys(failedDomainsArray).length === 0 ){
+    if(Object.keys(failedDomainsArray).length === 0 ){
         document.querySelector("#domains-errors").style.display = "none";
     } else{
         document.querySelector("#domains-errors").style.display = "block";
@@ -64,14 +61,15 @@ function refreshStatus() {
         document.querySelector("#domains-errors-body").innerHTML = htmlList;
     }
 
-}
+};
 
 // function to inject the status and nodes
 const serversTabs = [];
-function updateTable(monit, nodeName, nodeId) {
-    if (document.querySelector("#_" + nodeId + "-services") == null) {
+const updateTable = (monit, nodeName, nodeId) => {
 
+    if (document.querySelector("#_" + nodeId + "-services") == null) {
         // in body
+        // TODO: rename var
         const myElement = document.createElement("section");
         myElement.id = nodeId;
         myElement.classList.add("hero-body");
@@ -82,16 +80,17 @@ function updateTable(monit, nodeName, nodeId) {
         myElement.innerHTML = `
         <div id="_${nodeId}-section"  class="container is-fluid">
             <h1 class="title">${nodeName}</h1>
-            <h2 class="subtitle">Last Update: <strong id="_${nodeId}-updateon" 
+            <h2 class="subtitle">Last Update: <strong id="_${nodeId}-updateon"
                             class="last-update" data-updated-on="${(new Date()).getTime()}"></strong></h2>
             <div id="_${nodeId}-services" class="columns is-multiline"></div>
         </div>`;
 
         // in tab
+        // TODO: rename var
         const myElement2 = document.createElement("button");
         myElement.id =  "_" + nodeId + "-tab";
         serversTabs.push( "_" + nodeId + "-services"  );
-        myElement2.onclick = function(){settings.scrollToCard( "_" + nodeId + "-services" );};
+        myElement2.onclick = () => {settings.scrollToCard( "_" + nodeId + "-services" );};
         myElement2.innerHTML = nodeName;
         myElement2.classList.add("button");
         myElement2.classList.add("is-light");
@@ -100,8 +99,9 @@ function updateTable(monit, nodeName, nodeId) {
 
     document.querySelector("#_" + nodeId + "-services").innerHTML = "";
     let text;
-    monit.service.forEach( (service, serviceKey) => {
+    monit.service.forEach((service, serviceKey) => {
 
+        // TODO: ?
         service.port ? "" : service.port = {
             port: ""
         };
@@ -141,27 +141,28 @@ function updateTable(monit, nodeName, nodeId) {
         }
 
     });
-    document.querySelector("#_" + nodeId + "-updateon").setAttribute("data-updated-on", String((new Date()).getTime()) );
-}
+    document.querySelector("#_" + nodeId + "-updateon")
+        .setAttribute("data-updated-on", String((new Date()).getTime()));
+};
 
 
 // handle fav icon efficently
 const imgIconStoreArray = {};
 const imgIconBannedArray = [];
-function favIconStore(appendId, serviceName) {
+const favIconStore = (appendId, serviceName) => {
+
     if (imgIconStoreArray[serviceName]) {
         document.querySelector("#" + appendId).prepend(imgIconStoreArray[serviceName]);
-
     } else if (imgIconBannedArray.indexOf(serviceName) == -1) {
-
         const imgComponent = document.createElement("img");
         imgComponent.width = "16";
         imgComponent.height = "16";
-        imgComponent.src = "http://" + serviceName + "/favicon.ico";
+        imgComponent.src = "https://" + serviceName + "/favicon.ico";
         imgComponent.classList.add("img" + appendId);
-        imgComponent.onerror = function (e) {
-            e.preventDefault;
+        imgComponent.onerror = (e) => {
+            e.preventDefault();
             const failedImages = document.querySelectorAll(".img" + appendId);
+            // TODO: do not iterate on an array when you delete its content
             for (let i = 0; i < failedImages.length; ++i) {
                 failedImages[i].remove();
             }
@@ -172,13 +173,12 @@ function favIconStore(appendId, serviceName) {
         };
         imgIconStoreArray[serviceName] = imgComponent;
         document.querySelector("#" + appendId).prepend(imgIconStoreArray[serviceName]);
-
-
     }
-}
+
+};
 
 // update and put warning for the servers if last updated timedout
-function checkLastUpdate() {
+const checkLastUpdate =() => {
 
     const updateTimes = document.querySelectorAll(".last-update");
 
@@ -191,12 +191,12 @@ function checkLastUpdate() {
             updateTime.classList.add("card-status-failing");
         }
     }
-}
 
+};
 
 // cycle through the diffent nodes
 let cardScrollerIndex = 0;
-function cardScroller(){
+const cardScroller = () => {
 
     if( cardScrollerIndex >= serversTabs.length ){
         cardScrollerIndex = 0;
@@ -205,5 +205,5 @@ function cardScroller(){
         settings.scrollToCard(serversTabs[cardScrollerIndex]);
         cardScrollerIndex++;
     }
-}
 
+};
