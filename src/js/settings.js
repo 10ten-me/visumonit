@@ -188,7 +188,7 @@ const scrollToCard = ( id ) => {
     const el = document.querySelector("#" + id);
     const elemenetPosition = Math.floor(el.getBoundingClientRect().top) + window.scrollY;
     window.scroll(0, elemenetPosition - 150 );
-}
+};
 
 export  {
     settingsJson,
