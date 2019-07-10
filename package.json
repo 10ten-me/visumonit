@@ -1,14 +1,19 @@
 {
-  "name": "nunjucks-static",
+  "name": "visumonit",
   "version": "1.0.0",
-  "description": "Static site generator running on Nunjucks templating",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/10ten-me/visumonit"
+  },
+  "license": "GPL-3.0",
+  "description": "A beautiful monit dashboard",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "./node_modules/.bin/gulp",
     "lint": "./node_modules/.bin/eslint -c .eslintrc.js src/js/*"
   },
-  "author": "Ahmad Nofal",
+  "author": "10TEN",
   "dependencies": {
     "x2js": "3.3.0"
   },

@@ -11,8 +11,6 @@ const defaultConfig = JSON.stringify({
     }
 });
 
-refreshDomainSettingsList(); //init settings
-
 // open the modal for settings
 const openSettings = () => {
     
@@ -100,6 +98,7 @@ const refreshDomainSettingsList = () => {
     return JSON.parse(window.localStorage.getItem("ten-monit"));
 
 };
+refreshDomainSettingsList(); //init settings
 
 // add domain to the settings
 const addDomainToSettings = (e) => {
