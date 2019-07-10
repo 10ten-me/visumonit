@@ -48,5 +48,5 @@ will be compiled and copied to the root into `build/style.css`
 # How to deploy to Netlify
 Fork this repo and deploy it on Netlify.
 You will then need to change these from: Setttings > Build & Deploy > Build Settings >
-Build command: `gulp compile`
+Build command: `npm run build`
 Publish directory: `build/`
