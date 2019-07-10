@@ -44,6 +44,12 @@ const refreshDomainSettingsList = () => {
 
             <div class="column is-10">
 
+            <div class="field-body">
+                <p class="control field is-expanded">
+                    <input class="input" type="text" value="${ domain.url }" disabled>
+                </p>
+            </div>
+
             ${ ( domain.nickName ) ? `
             <div class="field-body has-margin-bottom-7">
                 <p class="control field is-expanded">
@@ -51,12 +57,6 @@ const refreshDomainSettingsList = () => {
                 </p>
               </div>
             `: ""}
-
-              <div class="field-body">
-                <p class="control field is-expanded">
-                    <input class="input" type="text" value="${ domain.url }" disabled>
-                </p>
-              </div>
 
               ${ ( domain.user || domain.pass) ? `
               
