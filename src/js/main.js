@@ -1,7 +1,7 @@
 
 
-import settings from "./settings";
-import timeTools from "./timeTools";
+import * as settings from "./settings";
+import * as timeTools from "./timeTools";
 import X2JS from "x2js";
 
 window.settings = settings; // so the html elements with onclick can access it
@@ -120,14 +120,14 @@ function updateTable(monit, nodeName, nodeId) {
                 <div class="content columns is-flex is-centered">
                     <img
                     class="service-logo" src="/images/${
-                service.port.protocol === "REDIS" ? "redis.png"
-                : service.port.protocol === "PGSQL" ? "postgres.png"
-                : service.port.protocol === "MYSQL" ? "mysql.png"
+    service.port.protocol === "REDIS" ? "redis.png"
+        : service.port.protocol === "PGSQL" ? "postgres.png"
+            : service.port.protocol === "MYSQL" ? "mysql.png"
                 // : service.port.protocol=== "nginx" ? "nginx.png"
                 : service.port.protocol === "SSH" ? "ssh.png"
-                : (service.name === "stark" || service.name === "banshee") ? "ziwo.png"
-                : "unknown.png"
-            }"></img>
+                    : (service.name === "stark" || service.name === "banshee") ? "ziwo.png"
+                        : "unknown.png" }
+                    "></img>
                 </div>
                 </div>
             </div>

@@ -33,6 +33,6 @@ function showDiff(date1, date2){
 
 }
 
-module.exports = {
+export {
     showDiff,
 };

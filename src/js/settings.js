@@ -176,7 +176,7 @@ function loadFileAsText(){
     document.getElementById("fileToLoad").value = "";
 }
 
-module.exports = {
+export  {
     settingsJson,
     loadFileAsText,
     refreshDomainSettingsList,
