@@ -5,7 +5,7 @@ Dashboard to display [monit](https://mmonit.com/monit/) XML output beautifully. 
 3. Support fetching from servers that require authentication.
 4. Support exporting and importing settings.
 
-![Screenshot showing the dashboard](docs/screenshot.png)
+![Screenshot showing the dashboard](docs/monit.gif)
 
 # How to use
 

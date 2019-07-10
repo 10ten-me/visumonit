@@ -22,7 +22,7 @@ way which you can put it on a big screen in office where everybody can see and k
 or keyboard. We are excited also to point that we decided to make this project open-source as in 10ten we love to contribute back to the community and 
 to allow other developers to work with us on making this tool much better.
 
-![Screenshot showing the dashboard](./screenshot.png) 
+![Screenshot showing the dashboard](./monit.gif) 
 
 ## How to use 
 
