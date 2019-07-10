@@ -11,6 +11,7 @@ const source       = require('vinyl-source-stream');
 const browserify   = require('browserify');
 const buffer       = require('vinyl-buffer');
 const babelify     = require('babelify');
+const terser       = require('gulp-terser');
 
 
 // for starting server
@@ -52,12 +53,13 @@ const compileScripts = () => {
             browserSync.notify('Browserify error!');
             this.emit('end');
         })
-        .pipe(source("main.js"))
+        .pipe(source('main.js'))
         .pipe(buffer())
-        .pipe(sourcemaps.init({ loadMaps: true }))
-        .pipe(sourcemaps.write("./"))
+        .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(terser())
+        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest("./build/scripts/"))
-        .pipe(browserSync.reload({ stream: true }));;
+        .pipe(browserSync.reload({ stream: true }));
 
 };
 
