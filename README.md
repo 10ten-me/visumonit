@@ -22,7 +22,8 @@ Once running, go to Settings and add a link to the xml monit URL you want to pre
 `https://example.com/monit/_status?format=xml`
 
 # Requirements
-Make sure to enable the `CORS` header `Access-Control-Allow-Origin` on your server, in addition if you are using authentication make sure you have these headers:
+Incase you dont have access to monit server use the sample file using the url `https://visumonit.10ten.com/example/_status?format=xml`.  
+Also make sure to enable the `CORS` header `Access-Control-Allow-Origin` on your server, in addition if you are using authentication make sure you have these headers:
 ```
 Access-Control-Allow-Credentials: true
 Access-Control-Allow-Headers: access_token
