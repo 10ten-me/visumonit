@@ -19,7 +19,7 @@ Dashboard to display [monit](https://mmonit.com/monit/) XML output beautifully. 
 `npm run lint`
 
 Once running, go to Settings and add a link to the xml monit URL you want to preview. example:
-`https://example.com/monit/_status?format=xml`
+`https://visumonit.10ten.com/example/_status?format=xml`
 
 # Requirements
 Incase you dont have access to monit server use the sample file using the url `https://visumonit.10ten.com/example/_status?format=xml`.  
