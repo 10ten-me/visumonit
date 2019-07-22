@@ -28,7 +28,7 @@ const showDiff = (date1, date2) => {
         output += "and ";
     }
     output += leftSec + " seconds ";
-    
+
     return  output + "ago";
 
 };

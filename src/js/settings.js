@@ -13,7 +13,7 @@ const defaultConfig = JSON.stringify({
 
 // open the modal for settings
 const openSettings = () => {
-    
+
     document.querySelector("#settings-modal").classList.add("is-active");
 
 };
@@ -59,21 +59,21 @@ const refreshDomainSettingsList = () => {
             `: ""}
 
               ${ ( domain.user || domain.pass) ? `
-              
+
               <div class="field-body has-margin-top-7">
               <div class="field">
                 <p class="control is-expanded">
                   <input class="input" type="text" value="${ domain.user }" disabled>
                 </p>
               </div>
-              
+
               <div class="field">
                 <p class="control is-expanded">
                     <input class="input" type="text" value="${ domain.pass }" disabled>
                 </p>
                 </div>
                 </div>
-            
+
               ` : ""}
             </div>
             <div class="column">
