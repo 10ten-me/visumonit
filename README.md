@@ -2,7 +2,7 @@
 Dashboard to display [monit](https://mmonit.com/monit/) XML output beautifully. The dashboard can:
 1. Supports displaying status from multiple servers.
 2. Automatically cycle through the different servers. Good for display-only screens.
-3. Support fetching from servers that require authentication.
+3. Support fetching from servers that need authentication.
 4. Support exporting and importing settings.
 
 ![Screenshot showing the dashboard](docs/monit.gif)
@@ -22,8 +22,9 @@ Once running, go to Settings and add a link to the xml monit URL you want to pre
 `https://visumonit.10ten.com/example/_status?format=xml`
 
 # Requirements
-Incase you dont have access to monit server use the sample file using the url `https://visumonit.10ten.com/example/_status?format=xml`.  
-Also make sure to enable the `CORS` header `Access-Control-Allow-Origin` on your server, in addition if you are using authentication make sure you have these headers:
+In case you don't have access to monit server use the sample file using the url `https://visumonit.10ten.com/example/_status?format=xml`.
+
+Also make sure to enable the `CORS` header `Access-Control-Allow-Origin` on your server, also if you are using authentication make sure you have these headers:
 ```
 Access-Control-Allow-Credentials: true
 Access-Control-Allow-Headers: access_token
