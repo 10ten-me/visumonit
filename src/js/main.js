@@ -56,7 +56,7 @@ const refreshStatus = () => {
         document.querySelector("#domains-errors").style.display = "block";
         let htmlList = "";
         Object.keys(failedDomainsArray).forEach( (failedDomainsKey) => {
-            htmlList += `<li> · ${failedDomainsKey} Has failed</li>`;
+            htmlList += `<li class="has-margin-bottom-7"> ✖ Fetching failed for: <br> &emsp;&ensp; ${failedDomainsKey.substring(1)} </li>`;
         });
         document.querySelector("#domains-errors-body").innerHTML = htmlList;
     }
